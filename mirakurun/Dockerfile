@@ -1,5 +1,5 @@
 FROM alpine:3.4
-MAINTAINER h-mineta <h-mineta@0nyx.net>
+MAINTAINER mzyy94 <mizuyuu0904@gmail.com>
 
 RUN set -x \
 	&& apk upgrade --update \
