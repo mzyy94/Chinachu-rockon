@@ -24,6 +24,7 @@ RUN set -x \
 		eudev-dev \
 		libevent-dev \
 		pcsc-lite-dev \
+		linux-headers \
 	\
 	&& npm install pm2 -g \
 	&& npm install arib-b25-stream-test -g --unsafe \
@@ -31,9 +32,10 @@ RUN set -x \
 	&& touch /usr/local/bin/update-rc.d ; chmod a+x /usr/local/bin/update-rc.d \
 	&& npm install mirakurun -g --unsafe --production \
 	\
-	# recpt1
-	&& git clone https://github.com/stz2012/recpt1 /tmp/recpt1 \
-	&& cd /tmp/recpt1/recpt1 \
+	# recdvb
+	&& git clone https://github.com/mzyy94/recdvb /tmp/recdvb \ 
+	&& cd /tmp/recdvb \
+	&& chmod +x ./autogen.sh \
 	&& ./autogen.sh \
 	&& ./configure \
 	&& sed -i '/#include <sys\/msg.h>/d' recpt1core.h \

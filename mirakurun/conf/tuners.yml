@@ -2,7 +2,7 @@
   types:
     - BS
     - CS
-  command: recpt1 --device /dev/pt3video0 <channel> - -
+  command: recdvb --dev 0 <channel> - -
   decoder: arib-b25-stream-test
   isDisabled: false
 
@@ -10,21 +10,21 @@
   types:
     - BS
     - CS
-  command: recpt1 --device /dev/pt3video1 <channel> - -
+  command: recdvb --dev 2 <channel> - -
   decoder: arib-b25-stream-test
   isDisabled: false
 
 - name: PT3-T0
   types:
     - GR
-  command: recpt1 --device /dev/pt3video2 <channel> - -
+  command: recdvb --dev 1 <channel> - -
   decoder: arib-b25-stream-test
   isDisabled: false
 
 - name: PT3-T1
   types:
     - GR
-  command: recpt1 --device /dev/pt3video3 <channel> - -
+  command: recdvb --dev 3 <channel> - -
   decoder: arib-b25-stream-test
   isDisabled: false
 
