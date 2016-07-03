@@ -1,23 +1,23 @@
 # Chinachu Rock-on
+
 Chinachu Rock-on for Rockstor
 
 ## Constitution
-### Mirakurun
+### Mirakurun [![Docker Pulls](https://img.shields.io/docker/pulls/mzyy94/mirakurun-recdvb-pt3.svg?maxAge=2592000&style=flat-square)](https://hub.docker.com/r/mzyy94/mirakurun-recdvb-pt3/)
 - Alpine Linux 3.4
 - [Mirakurun](https://github.com/kanreisa/Mirakurun)
 
-### Chinachu
+### Chinachu [![Docker Pulls](https://img.shields.io/docker/pulls/mzyy94/chinachu-beta-mirakurun.svg?maxAge=2592000&style=flat-square)](https://hub.docker.com/r/mzyy94/chinachu-beta-mirakurun/)
 - Alpine Linux 3.4
 - [Chinachu](https://github.com/kanreisa/Chinachu)  
 branch: devel-beta
 - [Rivarun](https://github.com/kanreisa/Rivarun)
 
 ## Tested environment
-- Rockstor 3.8-14  
++ [Rockstor](http://rockstor.com/) 3.8-14  
 Linux 4.6.0-1.el7.elrepo.x86_64
-
 + Tuner
-  - ISDB-S, ISDB-T Tuner PT3  
+  - ISDB-S, ISDB-T Tuner PT3
 + SmartCard Reader
   - Gemalto (was Gemplus) GemPC Twin SmartCard Reader
   - USB SmartCard Reader NTT Communications Corp. SCR3310-NTTCom
