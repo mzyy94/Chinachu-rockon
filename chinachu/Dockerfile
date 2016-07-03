@@ -39,6 +39,10 @@ RUN set -x \
 	&& ./chinachu service wui initscript | sudo -u chinachu tee /tmp/chinachu-wui \
 	&& sudo -u chinachu mkdir log \
 	\
+	&& sudo -u chinachu mkdir conf \
+	&& sudo -u chinachu ln -s /usr/local/chinachu/conf/config.json ./config.json \
+	&& sudo -u chinachu ln -s /usr/local/chinachu/conf/rules.json ./rules.json \
+	\
 	&& chown root. /tmp/chinachu-operator /tmp/chinachu-wui \
 	&& chmod u+x /tmp/chinachu-operator /tmp/chinachu-wui \
 	&& mv /tmp/chinachu-operator /etc/init.d/ \
@@ -57,6 +61,7 @@ RUN set -x \
 
 WORKDIR /usr/local/
 COPY services.sh /usr/local/bin
+COPY conf/config.json /usr/local/chinachu/config.sample.json
 
 CMD ["/usr/local/bin/services.sh"]
 EXPOSE 10772
