@@ -8,5 +8,5 @@ fi
 ### failed to run with an error by `ps -p` option
 # exec bash --rcfile <(cat <<<"trap '/etc/init.d/chinachu-wui stop; /etc/init.d/chinachu-operator stop; exit 0' TERM")
 
-trap 'echo "Stopping services..."; pkill -QUIT -P $(cat /var/run/chinachu-wui.pid); pkill -QUIT -P $(cat /var/run/chinachu-operator.pid); echo done; exit 0' TERM
+trap 'echo "Stopping services..."; /etc/init.d/chinachu-wui stop; /etc/init.d/chinachu-operator stop; echo done.; sleep 3; exit 0' TERM
 while true; do sleep 1; done

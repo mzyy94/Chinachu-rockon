@@ -7,6 +7,7 @@ RUN set -x \
 		bash \
 		'nodejs>=6.2.0' \
 		coreutils \
+		procps \
 	\
 	&& apk add --virtual .build-deps \
 		git \
