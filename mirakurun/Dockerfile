@@ -31,9 +31,10 @@ RUN set -x \
 	\
 	&& touch /usr/local/bin/update-rc.d ; chmod a+x /usr/local/bin/update-rc.d \
 	&& npm install mirakurun -g --unsafe --production \
+	&& mkdir -p /usr/local/share/mirakurun \
 	\
 	# recdvb
-	&& git clone https://github.com/mzyy94/recdvb /tmp/recdvb \ 
+	&& git clone https://github.com/mzyy94/recdvb /tmp/recdvb \
 	&& cd /tmp/recdvb \
 	&& chmod +x ./autogen.sh \
 	&& ./autogen.sh \
@@ -65,6 +66,9 @@ RUN set -x \
 
 WORKDIR /usr/local/
 COPY services.sh /usr/local/bin
+COPY conf/channels.yml /usr/local/share/mirakurun/
+COPY conf/server.yml /usr/local/share/mirakurun/
+COPY conf/tuners.yml /usr/local/share/mirakurun/
 
 CMD ["/usr/local/bin/services.sh"]
 EXPOSE 40772
