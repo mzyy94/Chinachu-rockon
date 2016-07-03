@@ -1,5 +1,5 @@
-# docker-mirakurun-chinachu
-Mirakurun と Chinachu をDockerコンテナに閉じ込めました
+# Chinachu Rock-on
+Chinachu Rock-on for Rockstor
 
 ## Constitution
 ### Mirakurun
@@ -12,71 +12,33 @@ Mirakurun と Chinachu をDockerコンテナに閉じ込めました
 branch: devel-beta
 - [Rivarun](https://github.com/kanreisa/Rivarun)
 
-## 動作確認環境
->CentOS Linux release 7.2.1511 (Core)  
-> Linux 3.10.0-327.22.2.el7.x86_64  
+## Tested environment
+- Rockstor 3.8-14  
+Linux 4.6.0-1.el7.elrepo.x86_64
 
-> Docker version 1.11.2, build b9f10c9
++ Tuner
+  - ISDB-S, ISDB-T Tuner PT3  
++ SmartCard Reader
+  - Gemalto (was Gemplus) GemPC Twin SmartCard Reader
+  - USB SmartCard Reader NTT Communications Corp. SCR3310-NTTCom
 
-> ISDB-S, ISDB-T Tuner PT3  
-> USB SmartCard Reader NTT Communications Corp. SCR3310-NTTCom
+## Usage
+1. Download **chinachu.json** from [release](https://github.com/mzyy94/Chinachu-rockon/releases) page.
+2. Create rock-ons metastore directory in your Rockstor.
 
-## 利用方法
-- 最新のdocker & docker-compose がインストール済
-- SELinuxの無効化推奨
-- ホストマシンにPT3 Driverがインストール済
-```
-$ ls -l /dev/pt*video*
-crw-rw-rw- 1 root video 246, 0 Jun 26 16:07 /dev/pt3video0
-crw-rw-rw- 1 root video 246, 1 Jun 26 16:07 /dev/pt3video1
-crw-rw-rw- 1 root video 246, 2 Jun 26 16:07 /dev/pt3video2
-crw-rw-rw- 1 root video 246, 3 Jun 26 16:07 /dev/pt3video3
-```
-- B-CAS 用に利用するスマートカードリーダーはMirakurunコンテナ内で管理しますので  
-ホストマシン上のpcscdは停止してください
-```
-sudo systemctl stop pcscd.socket
-sudo systemctl disable pcscd.socket
-```
+    `ssh root@your-rockstor-ip mkdir /opt/rockstor/rockons-metastore`
 
-- docker-composeを利用しておりますので、プロジェクトディレクトリ内で下記コマンドを実行してください  
-プロジェクトディレクトリ名はビルド時のレポジトリ名になりますので、適当に短いフォルダ名が推奨です
+3. Copy **chinachu.json** to your Rockstor.
 
-### 取得例
-```
-git clone https://github.com/h-mineta/docker-mirakurun-chinachu.git tvs
-cd tvs
-```
-### 起動
-```
-docker-compose up -d
-```
-### 停止
-```
-docker-compose down
-```
+    `scp chinachu.json root@your-rockstor-ip:/opt/rockstor/rockons-metastore`
 
-## 設定
-エリア、環境によって変更が必要なファイルは下記の通りとなります
-### Mirakurun
-- ポート番号 : 40772
-- mirakurun/config/tuners.yml  
-チューナー設定
-- mirakurun/config/channels.yml  
-チャンネル設定
+4. Turn toggle button on Web UI *ON* when Rock-on service is disabled.
+5. Press Update button on Web UI.
+6. Create share directories for recordings, Mirakurun and Chinachu data store.
+7. Install Chinachu Rock-on and enjoy your DVR life :)
 
-### Chinachu
-- ポート番号 : 10772
-- chinachu/config/config.json  
-チューナー設定  
-チャンネル設定
-
-### 録画ファイル保存先
-また録画ファイルはプロジェクトフォルダ内の./recordedに保存されます  
-> 保存先を別HDDにしたい場合は、docker-compose.ymlの
->> ./recorded:/usr/local/chinachu/recorded
->
-> を./recordedを変更することで保存先を変更可能
+## Configuration
+Edit configuration files in Mirakurun and Chinachu shared directory directly.
 
 ## License
 This software is released under the MIT License, see LICENSE.
