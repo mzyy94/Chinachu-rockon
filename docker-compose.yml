@@ -1,0 +1,32 @@
+version: '2'
+services:
+  mirakurun:
+    build:
+        context: mirakurun
+    container_name: mirakurun
+    privileged: true
+    ports:
+      - "40772:40772"
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - ./mirakurun/conf:/usr/local/etc/mirakurun
+     - ./mirakurun/db:/usr/local/var/db/mirakurun
+
+  chinachu:
+    build:
+        context: chinachu
+        args:
+         - REPOSITORY=git://github.com/Chinachu/Chinachu.git
+         - BRANCH=master
+    container_name: chinachu
+    ports:
+     - "10772:10772"
+     - "5353:5353/udp"
+    volumes:
+     - /etc/localtime:/etc/localtime:ro
+     - ./chinachu/conf/config.json:/usr/local/chinachu/config.json
+     - ./chinachu/conf/rules.json:/usr/local/chinachu/rules.json
+     - ./chinachu/data:/usr/local/chinachu/data
+     - ./recorded:/usr/local/chinachu/recorded
+    links:
+     - mirakurun:container-mirakurun

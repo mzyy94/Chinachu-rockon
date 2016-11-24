@@ -1,13 +1,18 @@
 FROM alpine:3.4
 MAINTAINER mzyy94 <mizuyuu0904@gmail.com>
 
+ARG REPOSITORY="git://github.com/Chinachu/Chinachu.git"
+ARG BRANCH="master"
+
 RUN set -x \
 	&& apk upgrade --update \
 	&& apk add \
 		bash \
 		'nodejs>=6.2.0' \
 		coreutils \
+		curl \
 		procps \
+		ca-certificates \
 	\
 	&& apk add --virtual .build-deps \
 		git \
@@ -30,11 +35,10 @@ RUN set -x \
 	\
 	&& adduser -D -u 99 -h /usr/local/chinachu chinachu \
 	&& mkdir -p /usr/local/chinachu \
-	&& git clone git://github.com/kanreisa/Chinachu.git /usr/local/chinachu \
+	&& git clone ${REPOSITORY} /usr/local/chinachu \
 	&& chown -R chinachu:chinachu /usr/local/chinachu \
 	&& cd /usr/local/chinachu \
-	# chinachu-beta
-	&& git checkout devel-beta \
+	&& git checkout ${BRANCH} \
 	&& echo 1 | sudo -u chinachu ./chinachu installer \
 	&& ./chinachu service operator  initscript | sudo -u chinachu tee /tmp/chinachu-operator \
 	&& ./chinachu service wui initscript | sudo -u chinachu tee /tmp/chinachu-wui \
@@ -60,9 +64,9 @@ RUN set -x \
 	#&& ln -sf /dev/stdout /usr/local/chinachu/log/scheduler \
 	#&& ln -sf /dev/stdout /usr/local/chinachu/log/wui
 
-WORKDIR /usr/local/
+WORKDIR /usr/local/chinachu
 COPY services.sh /usr/local/bin
-COPY conf/config.json /usr/local/chinachu/config.sample.json
+COPY config.sample.json /usr/local/chinachu/config.sample.json
 
 CMD ["/usr/local/bin/services.sh"]
-EXPOSE 10772
+EXPOSE 10772 5353
