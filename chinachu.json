@@ -52,6 +52,13 @@
                     ]
                 ],
                 "ports": {
+                    "5353": {
+                        "description": "Chinachu mDNS port.",
+                        "host_default": 5353,
+                        "label": "Chinachu mDNS port",
+                        "protocol": "udp",
+                        "ui": false
+                    },
                     "10772": {
                         "description": "Chinachu WebUI port. Suggested default: 10772",
                         "host_default": 10772,
