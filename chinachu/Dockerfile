@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM alpine:3.5
 MAINTAINER mzyy94 <mizuyuu0904@gmail.com>
 
 ARG REPOSITORY="git://github.com/Chinachu/Chinachu.git"
@@ -30,8 +30,6 @@ RUN set -x \
 		musl-dev \
 		eudev-dev \
 		libevent-dev \
-	\
-	&& npm install rivarun -g \
 	\
 	&& adduser -D -u 99 -h /usr/local/chinachu chinachu \
 	&& mkdir -p /usr/local/chinachu \
@@ -69,4 +67,4 @@ COPY services.sh /usr/local/bin
 COPY config.sample.json /usr/local/chinachu/config.sample.json
 
 CMD ["/usr/local/bin/services.sh"]
-EXPOSE 10772 5353
+EXPOSE 10772 20772 5353
