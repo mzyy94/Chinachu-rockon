@@ -1,14 +1,22 @@
-FROM alpine:3.5
+FROM alpine:3.6
 MAINTAINER mzyy94 <mizuyuu0904@gmail.com>
+
+ENV DOCKER="YES"
 
 ARG REPOSITORY="git://github.com/Chinachu/Chinachu.git"
 ARG BRANCH="master"
+
+ARG WORK_DIR="/usr/local/chinachu"
+
+ARG USER_NAME="chinachu"
+ARG USER_ID="1000"
 
 RUN set -x \
 	&& apk upgrade --update \
 	&& apk add \
 		bash \
 		'nodejs>=6.2.0' \
+		nodejs-npm \
 		coreutils \
 		curl \
 		procps \
@@ -31,20 +39,20 @@ RUN set -x \
 		eudev-dev \
 		libevent-dev \
 	\
-	&& adduser -D -u 99 -h /usr/local/chinachu chinachu \
-	&& mkdir -p /usr/local/chinachu \
-	&& git clone ${REPOSITORY} /usr/local/chinachu \
-	&& chown -R chinachu:chinachu /usr/local/chinachu \
-	&& cd /usr/local/chinachu \
+	&& adduser -D -u ${USER_ID} -h ${WORK_DIR} chinachu \
+	&& mkdir -p ${WORK_DIR} \
+	&& git clone ${REPOSITORY} ${WORK_DIR} \
+	&& chown -R ${USER_NAME} ${WORK_DIR} \
+	&& cd ${WORK_DIR} \
 	&& git checkout ${BRANCH} \
-	&& echo 1 | sudo -u chinachu ./chinachu installer \
-	&& ./chinachu service operator  initscript | sudo -u chinachu tee /tmp/chinachu-operator \
-	&& ./chinachu service wui initscript | sudo -u chinachu tee /tmp/chinachu-wui \
-	&& sudo -u chinachu mkdir log \
+	&& echo 1 | sudo -u ${USER_NAME} ./chinachu installer \
+	&& ./chinachu service operator  initscript | sudo -u ${USER_NAME} tee /tmp/chinachu-operator \
+	&& ./chinachu service wui initscript | sudo -u ${USER_NAME} tee /tmp/chinachu-wui \
+	&& sudo -u ${USER_NAME} mkdir log \
 	\
-	&& sudo -u chinachu mkdir conf \
-	&& sudo -u chinachu ln -s /usr/local/chinachu/conf/config.json ./config.json \
-	&& sudo -u chinachu ln -s /usr/local/chinachu/conf/rules.json ./rules.json \
+	&& sudo -u ${USER_NAME} mkdir conf \
+	&& sudo -u ${USER_NAME} ln -s ${WORK_DIR}/conf/config.json ./config.json \
+	&& sudo -u ${USER_NAME} ln -s ${WORK_DIR}/conf/rules.json ./rules.json \
 	\
 	&& chown root. /tmp/chinachu-operator /tmp/chinachu-wui \
 	&& chmod u+x /tmp/chinachu-operator /tmp/chinachu-wui \
@@ -58,13 +66,13 @@ RUN set -x \
 	&& rm -rf /var/cache/apk/*
 
 	# forward request and error logs to docker log collector
-	#&& ln -sf /dev/stdout /usr/local/chinachu/log/operator \
-	#&& ln -sf /dev/stdout /usr/local/chinachu/log/scheduler \
-	#&& ln -sf /dev/stdout /usr/local/chinachu/log/wui
+	#&& ln -sf /dev/stdout ${WORK_DIR}/log/operator \
+	#&& ln -sf /dev/stdout ${WORK_DIR}/log/scheduler \
+	#&& ln -sf /dev/stdout ${WORK_DIR}/log/wui
 
-WORKDIR /usr/local/chinachu
+WORKDIR ${WORK_DIR}
 COPY services.sh /usr/local/bin
-COPY config.sample.json /usr/local/chinachu/config.sample.json
+COPY config.sample.json ${WORK_DIR}
 
 CMD ["/usr/local/bin/services.sh"]
 EXPOSE 10772 20772 5353

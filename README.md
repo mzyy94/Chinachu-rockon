@@ -4,11 +4,11 @@ Chinachu Rock-on for Rockstor
 
 ## Constitution
 ### Mirakurun [![Docker Pulls](https://img.shields.io/docker/pulls/mzyy94/mirakurun-recdvb-pt3.svg?maxAge=2592000&style=flat-square)](https://hub.docker.com/r/mzyy94/mirakurun-recdvb-pt3/)
-- Alpine Linux 3.5
+- Alpine Linux 3.6
 - [Mirakurun](https://github.com/kanreisa/Mirakurun)
 
 ### Chinachu [![Docker Pulls](https://img.shields.io/docker/pulls/mzyy94/chinachu-beta-mirakurun.svg?maxAge=2592000&style=flat-square)](https://hub.docker.com/r/mzyy94/chinachu-beta-mirakurun/)
-- Alpine Linux 3.5
+- Alpine Linux 3.6
 - [Chinachu](https://github.com/kanreisa/Chinachu)  
 branch: gamma
 
