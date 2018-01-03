@@ -4,7 +4,7 @@ MAINTAINER mzyy94 <mizuyuu0904@gmail.com>
 ENV DOCKER="YES"
 
 ARG REPOSITORY="git://github.com/Chinachu/Chinachu.git"
-ARG BRANCH="master"
+ARG BRANCH="gamma"
 
 ARG WORK_DIR="/usr/local/chinachu"
 
